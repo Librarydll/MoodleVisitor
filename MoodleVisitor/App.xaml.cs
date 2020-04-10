@@ -1,4 +1,5 @@
-﻿using MoodleVisitor.Views;
+﻿using MoodleVisitor.Models.Infrastructure;
+using MoodleVisitor.Views;
 using Prism.Ioc;
 using Prism.Unity;
 using System.Windows;
@@ -16,7 +17,11 @@ namespace MoodleVisitor
 		}
 		protected override void RegisterTypes(IContainerRegistry containerRegistry)
 		{
-
+			IShceduleProvider scheduleProvider = new ShceduleProvider();
+			scheduleProvider.CreateInitialSchedule("schedule.xml");
+			containerRegistry.RegisterInstance(scheduleProvider);
+			containerRegistry.Register<IShceduleProvider, ShceduleProvider>();
 		}
+		
 	}
 }
