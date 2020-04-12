@@ -1,7 +1,9 @@
 ﻿using MoodleVisitor.Models.Infrastructure;
+using MoodleVisitor.Services;
 using MoodleVisitor.Views;
 using Prism.Ioc;
 using Prism.Unity;
+using System;
 using System.Windows;
 using Unity;
 namespace MoodleVisitor
@@ -20,6 +22,12 @@ namespace MoodleVisitor
 			containerRegistry.Register<IShceduleProvider, ShceduleProvider>();
 			containerRegistry.Register<ISettingProvider, SettingProvider>();
 		}
-		
+
+		protected override void OnInitialized()
+		{
+			AutoRunManager.SetAutoRun("MoodleVisitor");
+			base.OnInitialized();
+		}
+
 	}
 }

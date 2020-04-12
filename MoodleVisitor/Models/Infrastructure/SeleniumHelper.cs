@@ -11,7 +11,7 @@ using System.Windows;
 
 namespace MoodleVisitor.Models.Infrastructure
 {
-	public class SeleniumHelper
+	public class SeleniumHelper :IDisposable
 	{
 		public readonly string url = "http://moodle.samtuit.uz/login/index.php";
 		public readonly string chromeDriverPath = AppDomain.CurrentDomain.BaseDirectory;
@@ -93,5 +93,14 @@ namespace MoodleVisitor.Models.Infrastructure
 
 		}
 
+		public void Dispose()
+		{
+			if(_webDriver!=null)
+			{
+				_webDriver.Close();
+				_webDriver.Quit();
+				_webDriver = null;
+			}
+		}
 	}
 }

@@ -23,5 +23,10 @@ namespace MoodleVisitor.Views
 		{
 			InitializeComponent();
 		}
+
+		private void MenuItem_Click(object sender, RoutedEventArgs e)
+		{
+			this.Close();
+		}
 	}
 }
