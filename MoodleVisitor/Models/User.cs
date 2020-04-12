@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace MoodleVisitor.Models
 {
+	[Serializable]
 	public class User
 	{
 		public string Login { get; set; }

@@ -1,35 +1,28 @@
-﻿using Hardcodet.Wpf.TaskbarNotification;
-using MoodleVisitor.Models;
+﻿using MoodleVisitor.Models;
 using MoodleVisitor.Models.Infrastructure;
-using MoodleVisitor.Properties;
 using MoodleVisitor.Services;
-using MoodleVisitor.UIControls;
 using MoodleVisitor.UIControls.Infrastructure;
+using MoodleVisitor.Views;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
 using Unity;
 
 namespace MoodleVisitor.ViewModels
 {
-	public class MainViewModel :BindableBase
+    public class MainViewModel :BindableBase
 	{
         private bool _closeWindow = false;
         private TryIconService iconService =null ;
         private const string REGION_NAME = "MainRegion";
-        private User _user =new User() { Login= "di313-17-2",Password= "Di313-17-2" };
+        private User _user;
         public User User
         {
-            get { return _user =new User() { Login= "di313-17-2",Password= "Di313-17-2" }; }
+            get { return _user; }
             set { SetProperty(ref _user , value); }
         }
         private Visibility _windowVisibility = Visibility.Visible;
@@ -40,9 +33,14 @@ namespace MoodleVisitor.ViewModels
             set { SetProperty(ref _windowVisibility, value); }
         }
 
+        private bool _showInTaskbar = true;
 
-
-        private DelegateCommand _startProccessCommand;
+        public bool ShowInTaskbar
+        {
+            get { return _showInTaskbar; }
+            set { SetProperty(ref _showInTaskbar, value); }
+        }
+      
         private readonly SeleniumHelper _seleniumHelper;
         private readonly IRegionManager _regionManager;
         private readonly IUnityContainer _unityContainer;
@@ -50,6 +48,8 @@ namespace MoodleVisitor.ViewModels
         private LoginView loginView;
         private SettingView settingView;
         private DispatcherTimer timer;
+
+        private DelegateCommand _startProccessCommand;
         public DelegateCommand StartProccessCommand =>
             _startProccessCommand ?? (_startProccessCommand = new DelegateCommand(ExecuteStartProccess));
 
@@ -68,6 +68,7 @@ namespace MoodleVisitor.ViewModels
         private void OpenWindow()
         {
             WindowVisibility = Visibility.Visible;
+            ShowInTaskbar = true;
         }
 
         private void OnWindowsClosing(CancelEventArgs e)
@@ -76,6 +77,7 @@ namespace MoodleVisitor.ViewModels
             {
                 e.Cancel = true;
                 WindowVisibility = Visibility.Hidden;
+                ShowInTaskbar = false;
             }
             else
             {
@@ -112,6 +114,7 @@ namespace MoodleVisitor.ViewModels
             _settingProvider = settingProvider;
             InitializeView();
             InitializeTimer();
+            User = _settingProvider.Setting.User;
         }
 
         private void IconService_OnMenuItemClick(HeaderName headerName)
@@ -136,7 +139,7 @@ namespace MoodleVisitor.ViewModels
         }
         private void InitializeIconService()
         {
-            iconService = new TryIconService("a.ico");
+            iconService = new TryIconService("main.ico");
             iconService.SetDoubleClickCommand(OpenWindowCommand);
             iconService.OnMenuItemClick += IconService_OnMenuItemClick;
         }

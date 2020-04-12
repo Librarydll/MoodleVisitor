@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MoodleVisitor.Views"
         xmlns:tb="http://www.hardcodet.net/taskbar"
+        ShowInTaskbar="{Binding ShowInTaskbar}"
         x:Name="Windows"
         ResizeMode="NoResize"
         Visibility="{Binding WindowVisibility,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
@@ -13,6 +14,10 @@
         prism:ViewModelLocator.AutoWireViewModel="True"
         mc:Ignorable="d"
         Title="Main" Height="450" Width="400">
+
+    <Window.Resources>
+        
+</Window.Resources>
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Closing">
             <prism:InvokeCommandAction Command="{Binding OnWindowsClosingCommand}"  />
@@ -26,8 +31,7 @@
         </Grid.RowDefinitions>
         <ToolBar>
             <Button Command="{Binding ChangeViewCommand}" CommandParameter="LoginView">Login view</Button>
-            <Button Visibility="Hidden" Command="{Binding ChangeViewCommand}" CommandParameter="SettingView">Setting view</Button>
-            <TextBlock x:Name="a">qwe</TextBlock>
+            <Button Command="{Binding ChangeViewCommand}" CommandParameter="SettingView">Setting view</Button>
         </ToolBar>
         <ContentControl Grid.Row="1" prism:RegionManager.RegionName="MainRegion"/>
     </Grid>

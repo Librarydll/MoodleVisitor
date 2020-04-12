@@ -9,6 +9,6 @@ namespace MoodleVisitor.Models.Infrastructure
 	public interface ISettingProvider
 	{
 		Setting Setting { get; }
-
+		void SaveSettings(Setting setting);
 	}
 }

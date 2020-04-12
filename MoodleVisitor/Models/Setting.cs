@@ -18,7 +18,8 @@ namespace MoodleVisitor.Models
 		[XmlIgnore]
 		public TimeSpan Time => GetTimeFromString(StringTime);
 
-
+		public bool AutoRunEnable { get; set; }
+		public User User { get; set; }
 		public TimeSpan GetTimeFromString(string s)
 		{
 			if (TimeSpan.TryParse(s, out TimeSpan result))

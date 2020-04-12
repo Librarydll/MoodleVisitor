@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace MoodleVisitor.UIControls
+namespace MoodleVisitor.Views
 {
 	/// <summary>
-	/// Interaction logic for SettingControl.xaml
+	/// Interaction logic for LoginControl.xaml
 	/// </summary>
-	public partial class SettingView : UserControl
+	public partial class LoginView : UserControl
 	{
-		public SettingView()
+		public LoginView()
 		{
 			InitializeComponent();
 		}

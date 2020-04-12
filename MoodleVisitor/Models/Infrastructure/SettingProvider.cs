@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace MoodleVisitor.Models.Infrastructure
 {
@@ -28,15 +29,16 @@ namespace MoodleVisitor.Models.Infrastructure
 			}
 			catch (Exception ex)
 			{
-
-				throw;
+				MessageBox.Show(ex.Message);
 			}
 		}
 		private void CreateInitialSettingFile()
 		{
 			Setting setting = new Setting()
 			{
-				StringTime = new TimeSpan(8, 0, 0).ToString()
+				StringTime = new TimeSpan(8, 0, 0).ToString(),
+				User =new User { Login = "di313-17-n", Password = "Di313-17-n" },
+				AutoRunEnable =true
 			};
 
 			serializer.Serialize(setting, FILE_NAME);
@@ -47,5 +49,14 @@ namespace MoodleVisitor.Models.Infrastructure
 			return serializer.DeSerialize(FILE_NAME);
 		}
 
+		public void SaveSettings(Setting setting)
+		{
+			if (File.Exists(FILE_NAME))
+				serializer.Serialize(setting, FILE_NAME);
+			else
+			{
+				MessageBox.Show("Can not save setting ,file does not exist");
+			}
+		}
 	}
 }

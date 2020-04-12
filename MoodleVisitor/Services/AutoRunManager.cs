@@ -25,6 +25,12 @@ namespace MoodleVisitor.Services
                 rkApp.SetValue(applicationName, System.Reflection.Assembly.GetExecutingAssembly().Location);
         }
 
+        public static void RemoveAutoRun(string applicationName)
+        {
+            if (!IsStartupItem())
+                rkApp.DeleteValue(applicationName, false);
+        }
+
     }
 	
 }
