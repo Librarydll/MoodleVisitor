@@ -14,22 +14,28 @@ namespace MoodleVisitor.Models.Infrastructure
 		{
 			return driver.FindElement(By.Id(id));
 		}
-		public static IWebElement FindElementByXpath(this IWebDriver driver, string id)
+		public static IWebElement FindElementByXpath(this IWebDriver driver, string xpath)
 		{
-			return driver.FindElement(By.XPath(id));
+			return driver.FindElement(By.XPath(xpath));
 		}
-		public static IReadOnlyCollection<IWebElement> FindElementsByXpath(this IWebDriver driver, string id)
+		public static IReadOnlyCollection<IWebElement> FindElementsByXpath(this IWebDriver driver, string xpath)
 		{
-			return driver.FindElements(By.XPath(id));
+			return driver.FindElements(By.XPath(xpath));
 		}
 
 		public static IEnumerable<string> CreateLinkFromElements(this IEnumerable<IWebElement> webElements)
 		{
 			return webElements.Select(x => x.GetAttribute("href"));
 		}
-		public static string CreateLinkFromElements(this IWebElement webElements)
+		public static string CreateLinkFromElement(this IWebElement webElement)
 		{
-			return webElements.GetAttribute("href");
+			return webElement.GetAttribute("href");
+		}
+		public static IEnumerable<IWebElement> CreatePageNumbersFromElements(this IEnumerable<IWebElement> webElements)
+		{
+			return webElements
+				.Where(x => !string.IsNullOrEmpty(x.Text))
+				.Where(x => int.TryParse(x.Text, out int result));
 		}
 	}
 }

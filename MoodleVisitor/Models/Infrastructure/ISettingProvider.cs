@@ -10,5 +10,7 @@ namespace MoodleVisitor.Models.Infrastructure
 	{
 		Setting Setting { get; }
 		void SaveSettings(Setting setting);
+		void SetAsExecuted();
+		void UnsetAsExecuted();
 	}
 }

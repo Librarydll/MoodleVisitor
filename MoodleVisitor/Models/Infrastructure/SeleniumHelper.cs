@@ -11,7 +11,7 @@ using System.Windows;
 
 namespace MoodleVisitor.Models.Infrastructure
 {
-	public class SeleniumHelper :IDisposable
+	public class SeleniumHelper : IDisposable
 	{
 		public readonly string url = "http://moodle.samtuit.uz/login/index.php";
 		public readonly string chromeDriverPath = AppDomain.CurrentDomain.BaseDirectory;
@@ -65,37 +65,82 @@ namespace MoodleVisitor.Models.Infrastructure
 
 		public async Task CourseViewAction()
 		{
-			await Task.Run(() =>
+			await Task.Run(async() =>
 				{
 					//Swtich to Курсы
 					_webDriver.FindElementByXpath(moodleSiteControlNames.TabContorlCourseXpath).Click();
-					var subjectNames = _webDriver.FindElementsByXpath(moodleSiteControlNames.TabControlElementsALocation)
-					.Where(x => !string.IsNullOrWhiteSpace(x.Text));
-					foreach (Subject subject in _shceduleProvider.Shcedule.GetTodaySubjects())
+					var pages = _webDriver.FindElementsByXpath(moodleSiteControlNames.Pagging).CreatePageNumbersFromElements();
+					foreach (var pageNumber in pages)
 					{
-						var link = subjectNames.Where(x => subject.Equals(x.Text)).CreateLinkFromElements().FirstOrDefault();
-						_navigateLink.Add(link);
+						pageNumber.Click();
+						var subjectNames = _webDriver.FindElementsByXpath(moodleSiteControlNames.TabControlElementsALocation)
+											.Where(x => !string.IsNullOrWhiteSpace(x.Text));
+
+						foreach (Subject subject in _shceduleProvider.Shcedule.GetTodaySubjects())
+						{
+							var link = subjectNames.Where(x => subject.SubjectName.Equals(x.Text)).CreateLinkFromElements().FirstOrDefault();
+							if(!string.IsNullOrWhiteSpace(link))
+							_navigateLink.Add(link);
+						}
+					 await	OpenCourses();
 					}
-					OpenCourses();
+
 				});
 
 		}
 
-		public void OpenCourses()
+		public async Task OpenCourses()
 		{
 			foreach (var link in _navigateLink)
 			{
 				((IJavaScriptExecutor)_webDriver).ExecuteScript("window.open();");
 				_webDriver.SwitchTo().Window(_webDriver.WindowHandles.Last());
 				_webDriver.Navigate().GoToUrl(link);
-				_webDriver.SwitchTo().Window(_webDriver.WindowHandles.First());
+				await LectureClick().ContinueWith(x => _webDriver.SwitchTo().Window(_webDriver.WindowHandles.First()));
+			}
+
+		}
+
+		public async Task LectureClick()
+		{
+			try
+			{
+				var ulLiList = _webDriver.FindElementsByXpath(moodleSiteControlNames.LectureList);
+
+				foreach (var li in ulLiList)
+				{
+					if (li.GetAttribute("class").Contains("resource"))
+					{
+						var imglist = li.FindElements(By.TagName("img"));
+						var imglast = imglist.Last();
+						var imgfirst= imglist.First();
+						if (imgfirst.GetAttribute("href").Contains("document-24"))
+						{
+							if (imglast.GetAttribute("alt").Contains(MoodleSiteControlNames.INCOMPLETED))
+							{
+								var a = li.FindElement(By.TagName("a"));
+								a.Click();
+								await Task.Delay(2000);
+							}
+						}
+						
+					}
+				}
+			}
+			catch (StaleElementReferenceException)
+			{
+				MessageBox.Show("че та с сайтом не то");
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show(ex.Message);
 			}
 
 		}
 
 		public void Dispose()
 		{
-			if(_webDriver!=null)
+			if (_webDriver != null)
 			{
 				_webDriver.Close();
 				_webDriver.Quit();

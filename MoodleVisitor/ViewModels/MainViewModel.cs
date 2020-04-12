@@ -113,7 +113,7 @@ namespace MoodleVisitor.ViewModels
             _unityContainer = unityContainer;
             _settingProvider = settingProvider;
             InitializeView();
-            InitializeTimer();
+           InitializeTimer();
             User = _settingProvider.Setting.User;
         }
 
@@ -151,18 +151,19 @@ namespace MoodleVisitor.ViewModels
 
             if (!_settingProvider.Setting.AlreadyExecute)
             {
-                if (settingHour >= nowHour - 2)
+                if (settingHour == nowHour||settingHour+1==nowHour)
                 {
                     ExecuteStartProccess();
-                    _settingProvider.Setting.AlreadyExecute = true;
+                    _settingProvider.SetAsExecuted();
                 }
             }
 
             if (new TimeSpan(settingHour + 12,0,0).Hours == nowHour)
             {
-                _settingProvider.Setting.AlreadyExecute = false;
+                _settingProvider.UnsetAsExecuted();
+
             }
-           
+
         }
 
         async void ExecuteStartProccess()

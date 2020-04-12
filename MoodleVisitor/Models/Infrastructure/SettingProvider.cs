@@ -58,5 +58,17 @@ namespace MoodleVisitor.Models.Infrastructure
 				MessageBox.Show("Can not save setting ,file does not exist");
 			}
 		}
+
+		public void SetAsExecuted()
+		{
+			Setting.AlreadyExecute = true;
+			serializer.Serialize(Setting, FILE_NAME);
+		}
+
+		public void UnsetAsExecuted()
+		{
+			Setting.AlreadyExecute = false;
+			serializer.Serialize(Setting, FILE_NAME);
+		}
 	}
 }

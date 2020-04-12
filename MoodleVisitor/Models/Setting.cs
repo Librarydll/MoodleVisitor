@@ -12,7 +12,6 @@ namespace MoodleVisitor.Models
 	{
 		[XmlElement(ElementName = "Time")]
 		public string StringTime { get; set; }
-		[XmlIgnore]
 		public bool AlreadyExecute { get; set; }
 
 		[XmlIgnore]
