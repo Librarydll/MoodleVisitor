@@ -1,0 +1,43 @@
+﻿<UserControl x:Class="MoodleVisitor.UIControls.Core.TimeControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MoodleVisitor.UIControls.Core"
+             mc:Ignorable="d" 
+             x:Name="UserControl"
+             Height="Auto" Width="Auto">
+    <Grid x:Name="LayoutRoot" Width="100" Height="auto" Background="White">
+        <Grid.ColumnDefinitions>
+
+            <ColumnDefinition Width="0.2*"/>
+
+            <ColumnDefinition Width="0.05*"/>
+
+            <ColumnDefinition Width="0.2*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Hours -->
+        <Grid x:Name="hours" Focusable="True" MouseWheel="OnMouseWheel" >
+            <TextBox x:Name="hh" TextWrapping="Wrap" Text="{Binding Path=Hours, ElementName=UserControl, Mode=Default}" 
+                     PreviewKeyDown="OnKeyDown" PreviewTextInput="OnPreviewTextInput"  DataObject.Pasting="OnTextPasting" 
+                     TextAlignment="Center" VerticalAlignment="Center"  BorderThickness="0"/>
+        </Grid>
+
+        <!-- Separator ':' -->
+        <Grid  Grid.Column="1">
+            <TextBox IsReadOnly="True" x:Name="sep1" TextWrapping="Wrap" VerticalAlignment="Center" Text=":" TextAlignment="Center"  BorderThickness="0"/>
+        </Grid>
+
+        <!-- Minutes -->
+        <Grid  Grid.Column="2" x:Name="minutes" Focusable="True" MouseWheel="OnMouseWheel">
+            <TextBox  x:Name="mm"  TextWrapping="Wrap" Text="{Binding Path=Minutes, ElementName=UserControl, Mode=Default}" 
+                      PreviewKeyDown="OnKeyDown" PreviewTextInput="OnPreviewTextInput"  DataObject.Pasting="OnTextPasting" 
+                      TextAlignment="Center" VerticalAlignment="Center" BorderThickness="0" />
+        </Grid>
+
+      
+    </Grid>
+
+
+</UserControl>

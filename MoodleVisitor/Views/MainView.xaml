@@ -8,34 +8,17 @@
         xmlns:prism="http://prismlibrary.com/"
         prism:ViewModelLocator.AutoWireViewModel="True"
         mc:Ignorable="d"
-        Title="Main" Height="300" Width="300">
-    <Window.Resources>
-        <Style TargetType="Label">
-            <Setter Property="Margin" Value="5"/>
-        </Style>
-        <Style TargetType="TextBox">
-            <Setter Property="Padding" Value="2"/>
-            <Setter Property="Margin" Value="4"/>
-        </Style>
-    </Window.Resources>
+        Title="Main" Height="400" Width="400">
+    
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="70"/>
-            <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="auto"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-        <Label  Grid.Row="1" Grid.Column="0">Login:</Label>
-        <TextBox Text="{Binding Login}" Grid.Row="1" Grid.Column="1" Width="150"></TextBox>
-        <Label  Grid.Row="2" Grid.Column="0">Password:</Label>
-        <TextBox Text="{Binding Password}" Grid.Row="2" Grid.Column="1"  Width="150"></TextBox>
-        <Button Command="{Binding StartProccessCommand}" Padding="5" Margin="15" HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Row="3" Grid.Column="1"  DockPanel.Dock="Left">
-               Start proccess
-        </Button>
-    
+        <ToolBar>
+            <Button Command="{Binding ChangeViewCommand}" CommandParameter="LoginView">Login view</Button>
+            <Button Visibility="Hidden" Command="{Binding ChangeViewCommand}" CommandParameter="SettingView">Setting view</Button>
+        </ToolBar>
+        <ContentControl Grid.Row="1" prism:RegionManager.RegionName="MainRegion"/>
     </Grid>
 </Window>

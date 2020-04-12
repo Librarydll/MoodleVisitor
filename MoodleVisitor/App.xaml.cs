@@ -17,10 +17,8 @@ namespace MoodleVisitor
 		}
 		protected override void RegisterTypes(IContainerRegistry containerRegistry)
 		{
-			IShceduleProvider scheduleProvider = new ShceduleProvider();
-			scheduleProvider.CreateInitialSchedule("schedule.xml");
-			containerRegistry.RegisterInstance(scheduleProvider);
 			containerRegistry.Register<IShceduleProvider, ShceduleProvider>();
+			containerRegistry.Register<ISettingProvider, SettingProvider>();
 		}
 		
 	}

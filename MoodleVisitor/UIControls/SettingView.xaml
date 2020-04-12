@@ -1,0 +1,22 @@
+﻿<UserControl x:Class="MoodleVisitor.UIControls.SettingView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MoodleVisitor.UIControls"
+             xmlns:ctrl="clr-namespace:MoodleVisitor.UIControls.Core"
+             mc:Ignorable="d" 
+             d:DesignHeight="400" d:DesignWidth="400">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <StackPanel Margin="5" Orientation="Horizontal">
+            <Label Margin="5" FontSize="15" FontFamily="Calibri" FontWeight="DemiBold">Time to start automatically</Label>
+            <Border BorderBrush="#FF1E96FF" BorderThickness="2">
+                <ctrl:TimeControl Hours="10" Minutes="10" Seconds="30" x:Name="TimeControl"/>
+            </Border>
+        </StackPanel>
+    </Grid>
+</UserControl>

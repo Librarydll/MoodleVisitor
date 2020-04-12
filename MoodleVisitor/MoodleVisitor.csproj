@@ -94,15 +94,30 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Models\Core\XmlSerializerHelper.cs" />
+    <Compile Include="Models\Infrastructure\ISettingProvider.cs" />
     <Compile Include="Models\Infrastructure\IShceduleProvider.cs" />
+    <Compile Include="Models\Infrastructure\SettingProvider.cs" />
     <Compile Include="Models\Infrastructure\ShceduleProvider.cs" />
     <Compile Include="Models\Infrastructure\MoodleSiteControlNames.cs" />
     <Compile Include="Models\Infrastructure\SeleniumFinder.cs" />
     <Compile Include="Models\Infrastructure\SeleniumHelper.cs" />
+    <Compile Include="Models\Setting.cs" />
     <Compile Include="Models\Shcedule.cs" />
     <Compile Include="Models\Subject.cs" />
     <Compile Include="Models\User.cs" />
+    <Compile Include="UIControls\Core\TimeControl.xaml.cs">
+      <DependentUpon>TimeControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIControls\Infrastructure\ViewName.cs" />
+    <Compile Include="UIControls\LoginView.xaml.cs">
+      <DependentUpon>LoginView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIControls\SettingView.xaml.cs">
+      <DependentUpon>SettingView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\SettingViewModel.cs" />
     <Compile Include="Views\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
     </Compile>
@@ -135,6 +150,18 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="UIControls\Core\TimeControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UIControls\LoginView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UIControls\SettingView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\MainView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

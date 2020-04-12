@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MoodleVisitor.Models.Core;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace MoodleVisitor.Models.Infrastructure
 {
 	public class ShceduleProvider : IShceduleProvider
 	{
-		private XmlSerializer serializer = new XmlSerializer(typeof(Shcedule));
+		XmlSerializerHelper<Shcedule> serializer = new XmlSerializerHelper<Shcedule>();
 		public Shcedule Shcedule { get; private set; }
 
 		public ShceduleProvider()
@@ -47,36 +48,13 @@ namespace MoodleVisitor.Models.Infrastructure
 				new Subject{ DayOfWeek=DayOfWeek.Saturday,StartingTime=DateTime.Now,SubjectName="Dasturiy taminotlarni"},
 			};
 			shcedule.Subjects = s.ToArray();
-			try
-			{
-				using (Stream stream = new FileStream(path, FileMode.OpenOrCreate, FileAccess.Write, FileShare.None))
-				{
-					serializer.Serialize(stream, shcedule);
-				}
-			}
-			catch (Exception ex)
-			{
-
-				MessageBox.Show(ex.Message);
-			}
+			serializer.Serialize(shcedule, path);			
 		}
 
 		public Shcedule GetScheduleFromFile(string path)
 		{
-			Shcedule _obj = null;
-			using (Stream stream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.None))
-			{
-				try
-				{
-					_obj = (Shcedule)serializer.Deserialize(stream);
-				}
-				catch (Exception ex)
-				{
-					MessageBox.Show(ex.Message);
-				}
-			}
-			Shcedule = _obj;
-			return _obj;
+			Shcedule = serializer.DeSerialize(path);
+			return Shcedule;
 		}
 	}
 }
