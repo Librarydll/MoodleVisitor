@@ -31,7 +31,7 @@
         </Grid.RowDefinitions>
         <ToolBar>
             <Button Command="{Binding ChangeViewCommand}" CommandParameter="LoginView">Login view</Button>
-            <Button Command="{Binding ChangeViewCommand}" CommandParameter="SettingView">Setting view</Button>
+            <Button Visibility="Collapsed" Command="{Binding ChangeViewCommand}" CommandParameter="SettingView">Setting view</Button>
         </ToolBar>
         <ContentControl Grid.Row="1" prism:RegionManager.RegionName="MainRegion"/>
     </Grid>

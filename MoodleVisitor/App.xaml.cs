@@ -25,7 +25,7 @@ namespace MoodleVisitor
 
 		protected override void OnInitialized()
 		{
-			AutoRunManager.SetAutoRun("MoodleVisitor");
+			//AutoRunManager.SetAutoRun("MoodleVisitor");
 			base.OnInitialized();
 		}
 

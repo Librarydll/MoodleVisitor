@@ -26,8 +26,8 @@
                 <ctrl:TimeControl Hours="10" Minutes="10" Seconds="30" x:Name="TimeControl"/>
             </Border>
         </StackPanel>
-        <Label Margin="5" FontSize="15" FontFamily="Calibri" FontWeight="DemiBold">Register as autorun</Label>
-        <CheckBox Grid.Column="1" IsChecked="{Binding Setting.AutoRunEnable}" HorizontalAlignment="Center" VerticalAlignment="Center"></CheckBox>
+        <!--<Label Margin="5" FontSize="15" FontFamily="Calibri" FontWeight="DemiBold">Register as autorun</Label>
+        <CheckBox Grid.Column="1" IsChecked="{Binding Setting.AutoRunEnable}" HorizontalAlignment="Center" VerticalAlignment="Center"></CheckBox>-->
         <Label Grid.Row="1" Margin="5" FontSize="15" FontFamily="Calibri" FontWeight="DemiBold">Login</Label>
         <TextBox Text="{Binding Setting.User.Login}" Margin="5" Padding="4" Width="150" Grid.Row="1" Grid.Column="1"></TextBox>
         <Label Grid.Row="2" Margin="5" FontSize="15" FontFamily="Calibri" FontWeight="DemiBold">Password</Label>

@@ -20,5 +20,6 @@ namespace MoodleVisitor.Models.Infrastructure
 		public string Pagging { get; set; } = "//a[contains(@class,'page-link')]";
 		public string IsCompletedList { get; set; } = "//ul[contains(@class,'topics')]/li[position()>1]//form//button//img";
 		public string LectureList { get; set; } = "//ul[contains(@class,'topics')]/li[position()>1]//ul/li";
+		public string ApplyButtonXPath { get; set; } = "//ul[contains(@class,'topics')]/li//form//button";
 	}
 }

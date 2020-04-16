@@ -65,9 +65,8 @@ namespace MoodleVisitor.Models.Infrastructure
 
 		public async Task CourseViewAction()
 		{
-			await Task.Run(async() =>
+			await Task.Run(() =>
 				{
-					//Swtich to Курсы
 					_webDriver.FindElementByXpath(moodleSiteControlNames.TabContorlCourseXpath).Click();
 					var pages = _webDriver.FindElementsByXpath(moodleSiteControlNames.Pagging).CreatePageNumbersFromElements();
 					foreach (var pageNumber in pages)
@@ -75,33 +74,35 @@ namespace MoodleVisitor.Models.Infrastructure
 						pageNumber.Click();
 						var subjectNames = _webDriver.FindElementsByXpath(moodleSiteControlNames.TabControlElementsALocation)
 											.Where(x => !string.IsNullOrWhiteSpace(x.Text));
-
+						var s = _shceduleProvider.Shcedule.GetTodaySubjects();
 						foreach (Subject subject in _shceduleProvider.Shcedule.GetTodaySubjects())
 						{
 							var link = subjectNames.Where(x => subject.SubjectName.Equals(x.Text)).CreateLinkFromElements().FirstOrDefault();
 							if(!string.IsNullOrWhiteSpace(link))
 							_navigateLink.Add(link);
 						}
-					 await	OpenCourses();
+					 	OpenCourses();
 					}
 
 				});
 
 		}
 
-		public async Task OpenCourses()
+		public void OpenCourses()
 		{
 			foreach (var link in _navigateLink)
 			{
 				((IJavaScriptExecutor)_webDriver).ExecuteScript("window.open();");
 				_webDriver.SwitchTo().Window(_webDriver.WindowHandles.Last());
 				_webDriver.Navigate().GoToUrl(link);
-				await LectureClick().ContinueWith(x => _webDriver.SwitchTo().Window(_webDriver.WindowHandles.First()));
+				LectureClick();
+				ApplyButtonClick();
+				_webDriver.SwitchTo().Window(_webDriver.WindowHandles.First());
 			}
 
 		}
 
-		public async Task LectureClick()
+		public void  LectureClick()
 		{
 			try
 			{
@@ -113,17 +114,16 @@ namespace MoodleVisitor.Models.Infrastructure
 					{
 						var imglist = li.FindElements(By.TagName("img"));
 						var imglast = imglist.Last();
-						var imgfirst= imglist.First();
-						if (imgfirst.GetAttribute("href").Contains("document-24"))
+						var imgfirst = imglist.First();
+						var src = imgfirst.GetAttribute("src");
+						if (src.Contains("document-24")|| src.Contains("powerpoint-24"))
 						{
 							if (imglast.GetAttribute("alt").Contains(MoodleSiteControlNames.INCOMPLETED))
 							{
 								var a = li.FindElement(By.TagName("a"));
 								a.Click();
-								await Task.Delay(2000);
 							}
 						}
-						
 					}
 				}
 			}
@@ -136,6 +136,33 @@ namespace MoodleVisitor.Models.Infrastructure
 				MessageBox.Show(ex.Message);
 			}
 
+		}
+
+		public void ApplyButtonClick()
+		{
+			try
+			{
+				var buttons = _webDriver.FindElementsByXpath(moodleSiteControlNames.ApplyButtonXPath);
+				foreach (var button in buttons)
+				{
+					var img = button.FindElement(By.TagName("img"));
+
+					if (img == null) continue;
+
+					if (img.GetAttribute("alt").Contains(MoodleSiteControlNames.INCOMPLETED))
+					{
+						button.Click();
+					}
+				}
+			}
+			catch (StaleElementReferenceException)
+			{
+				MessageBox.Show("че та с сайтом не то");
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show(ex.Message);
+			}
 		}
 
 		public void Dispose()

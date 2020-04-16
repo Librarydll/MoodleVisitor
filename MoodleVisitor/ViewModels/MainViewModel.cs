@@ -113,7 +113,7 @@ namespace MoodleVisitor.ViewModels
             _unityContainer = unityContainer;
             _settingProvider = settingProvider;
             InitializeView();
-           InitializeTimer();
+           // InitializeTimer();
             User = _settingProvider.Setting.User;
         }
 
@@ -167,8 +167,11 @@ namespace MoodleVisitor.ViewModels
         }
 
         async void ExecuteStartProccess()
-        {    
+        {
+            _settingProvider.Setting.User = User;
+            _settingProvider.SaveSettings(_settingProvider.Setting);
             await _seleniumHelper.Start(User);
+         
         }
         private void InitializeView()
         {
