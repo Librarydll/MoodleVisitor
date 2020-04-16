@@ -71,6 +71,7 @@ namespace MoodleVisitor.Models.Infrastructure
 					var pages = _webDriver.FindElementsByXpath(moodleSiteControlNames.Pagging).CreatePageNumbersFromElements();
 					foreach (var pageNumber in pages)
 					{
+						_navigateLink.Clear();
 						pageNumber.Click();
 						var subjectNames = _webDriver.FindElementsByXpath(moodleSiteControlNames.TabControlElementsALocation)
 											.Where(x => !string.IsNullOrWhiteSpace(x.Text));
